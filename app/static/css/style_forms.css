@@ -1,0 +1,210 @@
+
+
+#bloco-form{
+    width: 100%;
+    height:60vh;
+    padding:1vh 0vh;
+     /* Impede que o conteúdo quebre em uma nova linha */
+    overflow-x: auto; /* Adiciona a barra de rolagem vertical */
+    scrollbar-width: thin; 
+    scrollbar-color: #b1adad rgb(57, 57, 187);
+    color:black;
+}
+
+#bloco-form form{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+#bloco-form form div{
+    margin-left:4vh;
+
+}
+
+.input-group {
+    display: flex;
+    flex-direction: row;  /* Altera a direção dos itens para coluna */
+    align-items: left;     /* Alinha os itens ao centro horizontalmente */
+    width:90%;
+}
+
+.select-pessoa {
+    padding: 7px 3px;
+    margin-top: 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width:35%; 
+    height:5vh;
+    font-size: 16px;
+}
+
+.input-medio {
+    border: 1px solid #747272;
+    border-radius: 4px;
+    width:80%; 
+    height:4vh;
+    font-size: 16px;
+    margin-bottom: 2vh;
+    background-color: #dadbd8;
+}
+
+.input-pequeno {
+    border: 1px solid #747272;
+    border-radius: 4px;
+    width:100%; 
+    height:4vh;
+    font-size: 16px;
+    margin-bottom: 2vh;
+    background-color: #dbdbd8;
+}
+
+input[type="text"]::placeholder{
+    color:#333;
+    opacity: 0.7;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: blue;
+}
+
+label {
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.button-form {
+    background-color: #0a4585;
+    color: white;
+    cursor: pointer;
+    border:0;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button-form:hover {
+    background-color: #0056b3;
+}
+
+.actions {
+    width:100%;
+    margin-top: 20px;
+}
+
+.invalid-cpf {
+    color: red;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+.superior{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-between;
+}
+
+.superior select{
+    background-color: rgb(17, 17, 49);
+    border:0;
+    color:rgb(231, 220, 220);
+}
+
+
+.btn {
+    border: none;
+    padding: 8px 12px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.edit-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #45a049;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #e53935;
+}
+
+i {
+    font-size: 16px;
+}
+
+
+.voltar-btn{
+    font-family:Poppins-Medium;
+	font-size:15px;
+	color:#cac4c4;
+	line-height:1.2;
+	display:-webkit-box; 
+	display:-webkit-flex;
+	display:-moz-box;
+	display:-ms-flexbox;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	padding:0 15px;
+	min-width:100px;
+	height:30px;
+	border-radius:10px;
+	background:#9152f8;background:-webkit-linear-gradient(bottom,#7579ff,#b224ef);
+	background:-o-linear-gradient(bottom,#7579ff,#b224ef);
+	background:-moz-linear-gradient(bottom,#7579ff,#b224ef);
+	background:linear-gradient(bottom,#7579ff,#b224ef);
+	position:relative;
+	z-index:1;
+	-webkit-transition:all .4s;
+	-o-transition:all .4s;
+	-moz-transition:all .4s;
+	transition:all .4s;
+    opacity:0.9;
+
+}
+
+.voltar-btn::before{
+	content:"";display:block;position:absolute;
+	z-index:-1;
+	width:100%;
+	height:100%;
+	border-radius:10px;
+	background-color:rgb(12, 12, 12);
+	top:0;
+	left:0;
+	opacity:1;
+	-webkit-transition:all .4s;
+	-o-transition:all .4s;
+	-moz-transition:all .4s;
+	transition:all .4s}
+
+.voltar-btn:hover{
+	color:#fff
+}
+
+.voltar-btn:hover:before{
+	opacity:0
+}

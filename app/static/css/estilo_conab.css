@@ -1,0 +1,132 @@
+#tela_boas_vindas{
+    width:100%;
+    height:75vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    
+}
+
+#menu_conab{
+    width: 80%;
+    padding:3vh 4em;
+    background-color: rgba(12, 12, 12, 0.849);
+}
+
+#menu_conab p{
+    color:white;
+}
+
+#menu_conab a {
+    display: block;
+    color:rgb(7, 202, 236);
+}
+
+#menu_conab a:hover{
+    color:rgb(170, 185, 226);
+}
+
+#menu_conab nav{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#menu_conab nav a{
+    color:white;
+    border:1px solid gray;
+    padding:3px 5px;
+    font-size: 12px;
+}
+
+#menu_conab nav a:hover{
+    background-color: rgb(85, 84, 84);
+    color:rgb(221, 216, 216);
+}
+
+#menu_conab nav h4{
+    color:white;
+}
+
+/* Formulário */
+
+
+#formulario_conab{
+    width: 80%;
+    padding:3vh 4em;
+    background-color: rgba(12, 12, 12, 0.849);
+}
+
+#formulario_conab form input{
+    display: block;
+    width:60%;
+    height: 4vh;
+    background-color: rgba(90, 88, 88, 0.932);
+    color:white;
+    padding:10px;
+    margin-bottom: 1vh;
+}
+
+#formulario_conab form input::placeholder{
+    color:rgba(255, 255, 255, 0.856);
+}
+
+#formulario_conab form select{
+    display: block;
+    width:60%;
+    height: 4vh;
+    background-color: rgba(90, 88, 88, 0.932);
+    color:white;
+    padding:0px 10px;
+    margin-bottom: 1vh;
+}
+
+
+#formulario_conab form button{
+    display: block;
+    width:30%;
+    height: 4vh;
+    background-color: rgba(90, 88, 88, 0.932);
+    color:white;
+    padding:0px 10px;
+    margin-bottom: 1vh;
+}
+
+#formulario_conab form button:hover{
+    background-color: rgba(61, 60, 60, 0.932);;
+}
+
+
+.bloco_estudo{
+    border:1px solid gray;
+    padding:4vh 2em;
+    margin-bottom: 2vh;
+    background-color: rgba(12, 12, 12, 0.98);;
+}
+
+.bloco_estudo nav{
+    margin-bottom:4vh;
+}
+
+.bloco_estudo nav form button{
+    color:white;
+    border: 1px solid gray;
+    font-size: 12px;
+    padding: 4px 15px;
+}
+
+.bloco_estudo nav form button:hover{
+    background-color: rgb(58, 54, 50);
+}
+
+.bloco_estudo p{
+    font-size: 1rem; /* tamanho base de leitura */
+    line-height: 1.6; /* altura de linha confortável */
+    max-width: 100ch; /* largura ideal de leitura (aprox. 65 caracteres por linha) */
+    text-align: justify;
+    padding: 1rem; /* espaçamento interno */
+    white-space: pre-wrap;
+}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/estilo_usuarios.css') }}">
+
+<div id="tela_boas_vindas">
+
+    <div id="bloco-principal">
+        <div id="bloco-pessoal"></div>
+    </div>
+
+    <div id="tela-geral-usuarios">
+        <div id="usuarios-form">
+            <form method="post" action="/adicionar_usuario">
+                <input type="text" name="nome" placeholder="Nome: ">
+                <input type="text" name="ponto" placeholder="Ponto: ">
+                <input type="text" name="cargo" placeholder="Cargo: ">
+                <select name="nivel">
+                    <option value="usuario">Usuário Comum</option>
+                    <option value="gestor">Gerente/Gestor</option>
+                    <option value="admin">Administrador</option>
+                </select>
+                <button type="submit">Adicionar Usuário</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

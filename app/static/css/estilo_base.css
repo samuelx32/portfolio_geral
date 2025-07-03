@@ -1,0 +1,296 @@
+@font-face{font-family:Poppins-Regular;src:url(../fonts/poppins/Poppins-Regular.ttf)}
+@font-face{font-family:Poppins-Medium;src:url(../fonts/poppins/Poppins-Medium.ttf)}
+@font-face{font-family:Poppins-Bold;src:url(../fonts/poppins/Poppins-Bold.ttf)}
+@font-face{font-family:Poppins-SemiBold;src:url(../fonts/poppins/Poppins-SemiBold.ttf)}
+
+*{margin:0;padding:0;box-sizing:border-box;text-decoration: none;}
+body,html{font-family:Poppins-Regular,sans-serif}
+a{font-family:Poppins-Regular;font-size:14px;line-height:1.7;color:#666;margin:0;transition:all .4s;-webkit-transition:all .4s;-o-transition:all .4s;-moz-transition:all .4s}
+a:focus{outline:none!important}
+a:hover{text-decoration:none;color:#fff}
+h1,h2,h3,h4,h5,h6{margin:0}
+p{font-family:Poppins-Regular;font-size:14px;line-height:1.7;color:#666;margin:0}
+ul,li{margin:0;list-style-type:none}
+label{margin:0;display:block}
+button{outline:none!important;border:none;background:0 0}
+button:hover{cursor:pointer}
+
+#topo{
+    width: 100%;
+    height:8vh;
+    padding:2vh 8em;
+    background-color: black;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid white;
+    color:white;
+    
+}
+
+#topo p,a,i {
+    color:rgb(245, 241, 241);
+}
+
+#area-de-busca{
+    width:100%; 
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+}
+
+#area-de-busca input[type='text']{
+    width: 70%;
+    height: 3.5vh;
+    border: 1px solid black;
+    color:#333;
+    padding: 0 10px; /* Espaçamento interno para o texto */
+}
+
+#area-de-busca button{
+    border: 1px solid black; /* Para ter uma borda similar ao input */
+     /* Mesma altura do input */
+    padding: 0 15px; /* Para dar algum espaço interno no botão */
+    cursor: pointer; 
+    color:white;
+}
+
+#area-de-busca img{
+    width:5%;
+    margin-right: 2em;
+}
+
+
+#area-de-busca i{
+    color:white;
+
+}
+
+#area-de-busca a{
+    margin-right:2vh;
+}
+
+#menu-intermediario{
+    width:100%;
+    height:7vh;
+    overflow:hidden;
+    background:transparent;
+    
+}
+
+#meio-menu{
+    width: 100%;
+    height:7vh;
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    justify-content: flex-start;
+    background-color: black;
+    font-size: 2vh;
+    padding-left:3.5vh;
+}
+
+
+#meio-menu a{
+    padding-right: 5vh;
+}
+
+#meio-menu i{
+    padding-right:1vh;
+}
+
+.menulateral-form-btn{
+    font-family:Poppins-Medium;
+    font-size:14px;
+    color:#d1cdcd;
+    width:12em;
+    line-height:0.5;
+    display:-webkit-box;
+    display:-webkit-flex;
+    display:-moz-box;
+    display:-ms-flexbox;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:5px 5px;
+    background:-webkit-linear-gradient(bottom,#414144,#252425);
+    position:relative;z-index:1;-webkit-transition:all .4s;-o-transition:all .4s;-moz-transition:all .4s;transition:all .4s}
+
+.menulateral-form-btn::before{content:"";display:block;position:absolute;z-index:-1;width:100%;padding: 5px;
+    height:70vh;border-radius:0px;background-color:#070707;border-bottom:1px solid rgb(128, 125, 125);
+    top:0;left:0;opacity:1;-webkit-transition:all .4s;-o-transition:all .4s;-moz-transition:all .4s;transition:all .4s}
+
+.menulateral-form-btn:hover{color:#fff}
+.menulateral-form-btn:hover:before{opacity:0}
+
+#area-user{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding:0.66vh 1em;
+}
+
+#area-user i{
+    margin-right:10px;
+}
+
+.container-geral{
+    width:100%;
+    height: 93vh;
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:cover;
+    position:relative;
+    filter:brightness(70%);
+    padding:4vh 8em;
+}
+
+
+
+#master-conteudo{
+    width:100%;
+    height: 83vh;
+    overflow-x: auto; /* Adiciona a barra de rolagem vertical */
+    scrollbar-width: thin; 
+    scrollbar-color: #b1adad #0b56a7cc;
+    position: relative; 
+    padding: 20px;
+    border:1px solid rgb(20, 20, 20);
+    border-radius: 20px;
+    box-shadow: 2px 3px 3px rgb(36, 35, 35);
+    background: linear-gradient(to bottom, rgba(109, 37, 15, 0.3), rgba(68, 67, 67, 0.3)); 
+}
+
+#bloco-dropdowns{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    border:1px solid gray;
+    font-size: 15px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgb(20, 20, 20);
+    z-index: 1000;
+    right:0.2em;
+    min-width: 13em;
+}
+
+.dropdown-button:hover {
+    background-color: rgb(44, 43, 43);
+}
+
+.notificacoes{
+padding-right:6em;
+font-size: 14px;
+}
+
+.dropdown-content a {
+    color: #e9e3e3;
+    background-color: rgb(44, 43, 43);
+    padding: 10px 16px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    
+}
+
+
+.dropdown-content a:hover {
+    background-color: #807b7b;
+    
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    
+    
+}
+
+.dropdown:hover .dropdown-content1 {
+    display: block;
+    
+    
+}
+
+
+.notificacao{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    padding:1vh;
+}
+
+/* Oculta o alerta */
+.hidden {
+    display:none;
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+}
+
+.linha{
+    background-color: white;
+    width:1px;
+    height: 1vh;
+    margin-right: 1em;
+}
+
+.linha-h{
+    background-color: white;
+    width:100%;
+    height: 0.77px;
+    
+}
+
+
+/* Estilo do alerta de Exibição da mensagem */
+.custom-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4caf50; /* Cor do fundo (verde para sucesso) */
+    color: white; /* Cor do texto */
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Botão de fechar */
+.close-alert {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+
+
+/* Exibe o alerta */
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+}

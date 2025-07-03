@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROGRAMA DE ESTUDOS</title>
+  <link rel="icon" type="image/png" href="/static/images/casa.png">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/estilo_base.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+  <meta name="robots" content="noindex, follow">
+</head>
+
+<body>
+  <div id="custom-alert" class="custom-alert hidden">
+    <span id="alert-message">Mensagem do alerta</span>
+    <button class="close-alert" onclick="closeAlert()">×</button>
+  </div>
+ 
+  <nav id="topo">
+    <div id="area-de-busca">
+      <img src="{{ url_for('static', filename='images/logo.png') }}"> 
+      <a href="{{ url_for('home')}}">PÁGINA INICIAL</a>
+      <hr class="linha"/>
+      <a href="/vertente_index?vertente=conab">CONAB</a>
+      <hr class="linha"/>
+      <a href="/vertente_index?vertente=filosofia">FILOSOFIA</a>
+      <hr class="linha"/>
+      <a href="/vertente_index?vertente=musica">MÚSICA</a>
+      <hr class="linha"/>
+      <a href="/vertente_index?vertente=literatura">LITERATURA/POESIA</a>
+      <hr class="linha"/>
+      <a href="/vertente_index?vertente=fisica">FÍSICA</a>
+    </div>
+    <div id="bloco-dropdowns">
+      <div class="dropdown">
+        <button id="area-user" class="dropdown-button">
+          {% if notificacoes %}
+          <div style="position: relative;">
+            <i class="fa fa-bell"></i>
+            <span style="position: absolute; top: -5px; right: 3px; background: rgb(224, 4, 4); color: white; border-radius: 50%; padding: 1px 6px; font-size: 10px;">{{notificacoes|length}}</span>
+          </div>
+          {% else %}
+          <i class="fa fa-bell"></i>
+          {% endif %}
+          <p class="notificacoes">{{usuario}}</p>
+          <i class="fa fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-content">
+          {% if notificacoes %}
+            {% for notificacao in notificacoes %}
+            <div class="notificacao">
+              {{notificacao[0]}}<a href="/remover_notificacao?id={{notificacao[3]}}" class="nt-info"><i class="fas fa-times" style="color:red; font-size:20px;"></i></a>
+              
+            </div>
+            {% endfor %}
+          {% else %}
+            <a href="#" class="user-info"><div class=""></div>Você não possui Notificações.</a>
+          {% endif %}
+        
+        </div>
+      </div>
+
+    </div>
+
+  </nav>
+  
+
+  <div class="container-geral" style="background-image: url('{{ url_for('static', filename='images/Escola_de_Atenas.jpg') }}');">
+    <div id="master-conteudo">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+    
+   
+  </div>
+
+
+<script src="{{ url_for('static', filename='js/mascaras.js') }}"></script> 
+<script src="{{ url_for('static', filename='js/configuracoes_do_alert.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+
+{% if mensagem %}
+  
+<script>
+    // Código para exibir mensagem de resposta e logo em seguida zera o conteúdo da mensagem se não for notificação de mudança dos índices monetários.
+    showAlert("{{mensagem}}","{{tipo}}")
+    $(document).ready(function() {
+        resetar_mensagem()
+    });
+
+</script>
+
+{% endif %}
+
+
+  
+  

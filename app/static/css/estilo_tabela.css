@@ -1,0 +1,231 @@
+
+
+#menu-table{
+    background-color: rgb(31, 31, 32);
+    padding:2vh;
+    color:white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#menu-table div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.voltar-btn{
+    font-size: 2vh;
+    margin-right: 2vh;
+}
+
+.opcoes{
+    border:0;
+    background-color: transparent;
+    height:auto;
+    align-items: center;
+}
+
+#meio-table{
+    width:96%;
+    margin:2%;
+    border:1px solid rgb(24, 23, 23);
+    box-shadow: 3px 3px 4px gray;
+}
+
+#meio-table table{
+    width:100%;
+    background-color: #ffffffe0;
+    color:rgb(31, 30, 30);
+    
+    
+}
+
+
+#meio-table th,td{
+    max-width:8em;
+    margin:5px;
+    border-spacing: 0; 
+    padding: 10px 10px;
+    text-align: left;
+    white-space: nowrap; /* Impede a quebra de linha */
+    overflow: hidden; /* Esconde o conteúdo extra */
+    text-overflow: ellipsis;
+    font-size: 1.7vh;
+}
+
+
+#meio-table thead {
+    background-color: #083a6ecc;
+    color: #ffffffdc;
+    text-align: center;
+}
+
+
+th {
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #e4e6e6;
+}
+
+tr:hover {
+    background-color: #dcdaddef;
+    color:#333;
+}
+
+td {
+    border-bottom: 1px solid #ddd;
+}
+
+
+.no-results {
+    text-align: center;
+    color: #777;
+    padding: 15px;
+}
+
+.sleep-campo{
+    display:none;
+}
+
+
+.cobranca{
+    width: 1.5vh;
+    height:1.5vh;
+    background-color: rgb(228, 228, 47);
+    border:1px solid gray;
+    border-radius: 1vh;
+    margin-left:1vh;
+}
+
+.vencido{
+    width: 1.5vh;
+    height:1.5vh;
+    background-color: rgb(206, 30, 30);
+    border:1px solid gray;
+    border-radius: 1vh;
+    margin-left:1vh;
+}
+
+.pago{
+    width: 1.5vh;
+    height:1.5vh;
+    background-color: rgb(53, 228, 47);
+    border:1px solid gray;
+    border-radius: 1vh;
+    margin-left:1vh;
+}
+
+.parcial{
+    width: 1.5vh;
+    height:1.5vh;
+    background-color: rgb(47, 140, 228);
+    border:1px solid gray;
+    border-radius: 1vh;
+    margin-left:1vh;
+}
+
+
+/*  Estilo do Filtro */
+
+#filtros{
+    width:96%;
+    margin: 2%;
+    padding:2vh;
+    background-color: transparent;
+    border:1px solid rgb(24, 23, 23);
+    box-shadow: 2px 2px 3px gray;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#filtros form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#filtros input{
+    color:black;
+    margin-left:1vh;
+}
+
+.input-filtro{
+    height:1.7em;
+    width:10em;
+    color:rgb(54, 52, 52);
+    border:1px solid black;
+}
+.input-filtro::placeholder{
+    color:rgb(63, 61, 61);
+    padding-left:10px;
+}
+.btn-filtro{
+    margin-right: 1vh;
+    font-size: 16px;
+    padding:3px 2vh;
+    border-radius:3px;
+    border:1px solid black;
+    cursor: pointer;
+}
+
+.btn-filtro:hover{
+    background-color: #cac4c4;
+}
+
+.btn-info{
+    background-color: transparent;
+    color: rgb(23, 97, 182);
+    border:1px solid rgb(204, 201, 201);
+}
+
+.btn-info:hover{
+    background-color: transparent;
+    color:rgba(43, 134, 238, 0.89);
+}
+
+.link-red{
+    color:rgb(32, 30, 30);
+    text-shadow: #300606;
+    font-weight: 500;
+}
+
+.link-red:hover{
+    color:rgb(243, 6, 6);
+}
+
+
+table.dataTable {
+    color: black !important;
+}
+
+
+ /* Texto do cabeçalho: "Show X entries", "Search" */
+ .dataTables_wrapper .dataTables_length,
+ .dataTables_wrapper .dataTables_filter,
+ .dataTables_wrapper .dataTables_info {
+   color: black !important;
+   padding:10px !important;
+ }
+
+ /* Botões de paginação */
+ .dataTables_wrapper .dataTables_paginate .paginate_button {
+   color: black !important;
+ }
+
+ /* Inputs e selects */
+ .dataTables_wrapper .dataTables_filter input,
+ .dataTables_wrapper .dataTables_length select {
+   color: black !important;
+   border: 1px solid black !important;
+ }

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/estilo_usuarios.css') }}">
+
+<div id="tela_boas_vindas">
+
+    <div id="bloco-principal">
+        <div id="bloco-pessoal">
+            <!-- <img src="{{ url_for('static', filename='images/usuario.png') }}" alt="Usuário">
+            <h6>Bem vindo {{nome_usuario}}</h6> -->
+            <!-- <h3>PÁGINA INICIAL</h3> -->
+        </div>
+
+    </div>
+
+    <div id="tela-geral-usuarios">
+        <div id="titulo-usuarios">
+            <h4>Usuários cadastrados</h4>
+            <a href="/usuarios_form">Adicionar Novo usuário</a>
+        </div>
+        <div id="usuarios">
+            <table id="tabela-usuarios">
+                <thead>
+                <tr>
+                    <th>NOME</th>
+                    <th>CARGO</th>
+                    <th>NÍVEL</th>
+                    <th>FUNÇÕES</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{usuario[0]}}</td>
+                    <td>{{usuario[3]}}</td>
+                    <td>{{usuario[4]}}</td>
+                    <td class="botoes">
+                        <!-- <form>
+                            <button class="red">Excluir</button>
+                        </form>
+                        -->
+                        <form method="post" action="/visualizar_usuario">
+                            <input type="hidden" id="pt-usuario" name="pt-usuario" value="{{usuario[1]}}">
+                            <button class="blue">Visualizar</button>
+                        </form>
+                        <form class="formModal-tarefa" method="post" action="\">
+                            <input type="hidden" id="id-usuario" name="id-usuario" value="{{usuario[1]}}" data-id="{{usuario[5]}}">
+                            <button class="green" data-id="{{  usuario[5] }}" type="submit">Atribuir tarefa</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+
+</div>
+
+
+<div id="custom-confirm-tarefa" class="confirm-overlay hidden"> 
+    <div class="confirm-box-tarefa">
+        <div id="modal-superior">
+          <h3>ATRIBUIR TAREFA AO USUÁRIO</h3>
+          <button onclick="desativar_modal_tarefa()">x</button>
+        </div>
+        
+        <div class="confirm-buttons-tarefa">
+            <form method="post" action="/atribuir_tarefa">
+                <label>Título da Tarefa:</label>
+                <input type="text" name="titulo" placeholder="Titulo da tarefa:">
+                <label>Descrição da Tarefa:</label>
+                <textarea name="descricao" rows="5" cols="43"></textarea>
+                <label>Prioridade:</label>
+                <select id="urgencia" name="urgencia">
+                    <option value="BAIXA">BAIXA</option>
+                    <option value="NORMAL">NORMAL</option>
+                    <option value="ALTA">ALTA</option>
+                </select>
+                <input type="hidden" name="ponto_usuario" id="id-modal-usuario">
+                <button id="confirm-simples" class="btn-simples" onclick="desativar_modal_tarefa()">ATRIBUIR TAREFA</button>
+            </form>
+            
+        </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/configuracoes_tela_usuario.js') }}"></script>
+{% endblock %}

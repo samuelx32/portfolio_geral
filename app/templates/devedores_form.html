@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_forms.css') }}">    
+<link rel="stylesheet" type="text/css"
+href="{{ url_for('static', filename='css/material-design-iconic-font.min.css') }}">          
+<script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+{% if funcao != 'alterar' %}
+    <div id="meio">
+        <div id="meio-bloco1">
+            <div>
+                <a href="/lista_devedores"><i class="fa fa-arrow-left"></i></a>
+                <h4>Adicionar Devedor: </h4>
+            </div>
+            <select class="select-pessoa" id="pessoa" name="select">
+                <option value="cnpj">Pessoa Jurídica</option>
+                <option value="cpf">Pessoa Física</option>
+            </select>
+        </div>
+        
+        <div id="bloco-form">
+            <form id="formDevedor" method="post" action="/inserir_devedor" >
+                <div >
+                    <input class="input-medio" type="text" id="nome" name="nome" placeholder=" NOME: " required>
+                </div>
+                
+                <div id="div-cnpj" >
+                    <input class="input-medio" type="text" id="cnpj" name="cnpj" placeholder="  CNPJ: " maxlength="18" required>
+                </div>
+                <div id="div-cpf" class="sleep-campo">
+                    <input class="input-medio" type="text" id="cpf" name="cpf" placeholder="  CPF: " maxlength="14" >
+                </div>
+                
+                <div class="input-group">
+                    <div>
+                        <select class="input-pequeno" id="pronome" name="pronome">
+                            <option value="" disabled selected>Selecione um pronome</option>
+                            <option value="Ao">Ao</option>
+                            <option value="A">A</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select class="input-pequeno" id="tratamento" name="tratamento">
+                            <option value="" disabled selected>Selecione um tratamento</option>
+                            <option value="Prezado">Prezado</option>
+                            <option value="Prezada">Prezada</option>
+                        </select>
+                    </div>
+                </div>
+                
+                
+                <div>
+                    <input class="input-medio"type="text" id="endereco" name="endereco" placeholder="  ENDEREÇO: " required>
+                </div>
+
+                <div>
+                    <input class="input-medio"type="text" id="email" name="email" placeholder="  EMAIL: exemplo -> email1@gmail.com;email2@gmail.com" required>
+                </div>
+
+                <div >
+                    <input class="input-medio"type="text" id="contrato" name="contrato" placeholder="  CONTRATO:" required>
+                </div>
+                
+                <div >
+                    <input class="input-medio"type="text" id="contatos" name="contatos" placeholder="  CONTATOS:" required>
+                </div>
+
+                
+                <div class="button-group">
+                    <label for="processo"></label>
+                    <button type="submit" class="button-form">Cadastrar Devedor</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</div>
+{% else %}
+<div id="meio">
+    <div id="meio-bloco1">
+        <div>
+            <form method="post" action="/mais_informacoes">
+                <input type="hidden" id="id_info" name ="chave" value="{{ resultados['id'] }}">
+                <input type="hidden" name ="tabela" value="devedores">
+                <button type="submit"><i class="fa fa-arrow-left"></i></button>
+            </form>
+            
+            <h4>Alterar Devedor: </h4>
+        </div>
+        
+        {% if juridica %}
+        <select class="select-pessoa" id="pessoa" name="select">
+            <option value="cnpj" selected>Pessoa Jurídica</option>
+            <option value="cpf">Pessoa Física</option>
+        </select>
+        {% else %}
+        <select class="select-pessoa" id="pessoa" name="select">
+            <option value="cnpj">Pessoa Jurídica</option>
+            <option value="cpf" selected>Pessoa Física</option>
+        </select>
+        {% endif %}
+    </div>
+    
+    <div id="bloco-form">
+        <form id="formDevedorAlterar" method="post" action="/alterar_devedor" >
+            <div >
+                <input class="input-medio" type="text" id="nome" name="nome" placeholder=" NOME: " value="{{ resultados['nome'] }}" required>
+            </div>
+            
+            <div id="div-cnpj" >
+                <input class="input-medio" type="text" id="cnpj" name="cnpj" placeholder="  CNPJ: " maxlength="18" value="{{ resultados['cnpj'] }}" required>
+            </div>
+            <div id="div-cpf" class="sleep-campo">
+                <input class="input-medio" type="text" id="cpf" name="cpf" placeholder="  CPF: " value="{{ resultados['cpf'] }}" maxlength="14" >
+            </div>
+            
+            <div class="input-group">
+                <div>
+                    <select class="input-pequeno" id="pronome" name="pronome">
+                        <option value="{{resultados['pronome']}}" selected>{{resultados['pronome']}}</option>
+                        <option value="Ao">Ao</option>
+                        <option value="A">A</option>
+                    </select>
+                </div>
+                <div>
+                    <select class="input-pequeno" id="tratamento" name="tratamento">
+                        <option value="{{resultados['tratamento']}}" selected>{{resultados['tratamento']}}</option>
+                        <option value="Prezado">Prezado</option>
+                        <option value="Prezada">Prezada</option>
+                    </select>
+                </div>
+            </div>
+            
+            
+            <div>
+                <input class="input-medio"type="text" id="endereco" name="endereco" placeholder="  ENDEREÇO: " value="{{ resultados['endereco'] }}"required>
+            </div>
+
+            <div>
+                <input class="input-medio"type="text" id="email" name="email" placeholder="  EMAIL: exemplo -> email1@gmail.com;email2@gmail.com" value="{{ resultados['email'] }}" required>
+            </div>
+
+            <div >
+                <input class="input-medio"type="text" id="contrato" name="contrato" placeholder="  CONTRATO:" value="{{ resultados['contrato'] }}" required>
+            </div>
+            
+            <div >
+                <input class="input-medio"type="text" id="contatos" name="contatos" placeholder="  CONTATOS:" value="{{ resultados['contatos'] }}" required>
+            </div>
+
+            <input type="hidden" id="id_alt" name="id" value="{{ resultados['id'] }}" required>
+
+            <div class="button-group">
+                <label for="processo"></label>
+                <button type="submit" class="button-form">Alterar Devedor</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</div>
+{% endif %}
+
+
+<script src="{{ url_for('static', filename='js/validacoes_e_post_devedores.js') }}"></script>
+
+{% endblock %}

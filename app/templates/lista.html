@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/estilo_tabela.css') }}">
+
+    <div id="meio">
+
+      <nav id="menu-table">
+        {% if tabela == 'devedores'%}
+        <div>
+          <!--<a class="voltar-btn" href="/"><i class="fa fa-arrow-left"></i></a>-->
+          <h4>Lista de Devedores</h4>
+        </div>
+        <div>
+          <a class="adicionar-button" href="/formulario_devedores">Adicionar Devedor</a>
+        </div>
+        {% elif tabela == 'debitos'%}
+        <div>
+          <!--<a class="voltar-btn" href="/"><i class="fa fa-arrow-left"></i></a>-->
+          <h4>Lista de Débitos</h4>
+        </div>
+        <div>
+          <a class="adicionar-button" href="/formulario_debitos">Adicionar Débitos</a>
+        </div>
+        {% elif tabela == 'baixas'%}
+        <div>
+          <!--<a class="voltar-btn" href="/"><i class="fa fa-arrow-left"></i></a>-->
+          <h4>Lista de Baixas</h4>
+        </div>
+        <div>
+         
+        </div>
+        {% endif %}
+      </nav>
+      {% if tabela == 'debitos'%}
+
+        <div id="filtros">
+          <form method="get" action="/lista_debitos">
+            <select class="input-filtro" for="status" name="status">
+              <option value="" disabled selected>Filtrar por Status</option>
+              <option value="cobranca">Em Cobrança</option>
+              <option value="parcial">Parcial</option>
+              <option value="pago">Pagos</option>
+              <option value="vencido">Vencidos</option>
+            </select>
+            <input type="text" class="input-filtro" name="cnpj" placeholder="CNPJ/CPF">
+            <input class="btn-filtro" type="submit" value="aplicar filtros">
+            
+          </form>
+
+          <a href="/lista_debitos" class="link-red">Remover Filtros</a>
+        </div>
+
+      {% elif tabela == 'devedores' %}
+        <div id="filtros">
+          <form method="get" action="/lista_devedores">
+            <input type="text" class="input-filtro" name="cnpj" placeholder="CNPJ/CPF">
+            <input class="btn-filtro" type="submit" value="aplicar filtros">
+            
+          </form>
+          <a href="/lista_devedores" class="link-red">Remover Filtros</a>
+        </div>
+      {% elif tabela == 'baixas' %}
+        <div id="filtros">
+          <form method="get" action="/lista_baixas">
+            <input type="text" class="input-filtro" name="num_ra" placeholder="Número da RA">
+            <input class="btn-filtro" type="submit" value="aplicar filtros">
+            
+          </form>
+          <a href="/lista_baixas" class="link-red">Remover Filtros</a>
+        </div>
+      {% endif %}
+        
+      
+
+      <div id="meio-table">
+        <table id="minhaTabela">
+          <thead>
+            <tr>
+            {% if tabela == 'devedores'%}
+              <th>Nome</th>
+              <th>CNPJ</th>
+              <th>Email</th>
+              <th></th>
+            {% elif tabela == 'debitos'%}
+            <th>Status</th>
+            <th>Nome Do Devedor</th>
+            <th>CNPJ</th>
+            <th>Número do Ofício</th>
+            <th>Data Ofício</th>
+            <th>Vencimento</th>
+            <th>Valor</th>
+            <th>Saldo Atual</th>
+            <th>Processo</th>
+            <th></th>
+            {% elif tabela == 'baixas'%}
+              <th>Número da RA</th>
+              <th>Valor</th>
+              <th>Data de Pagamento</th>
+              <th>Opções</th>
+            {% endif %}
+            </tr>
+          </thead>
+          <tbody>
+            {% if resultados %}
+            {% for resultado in resultados %}
+            
+            <tr>
+            {% if tabela == 'devedores'%}
+              <td>{{ resultado[1] }}</td>
+              <td>{{ resultado[2] }}</td>
+              <td>{{ resultado[4] }}</td>
+            
+            
+              <td class="opcoes">
+                <form method="post" action="/mais_informacoes">
+                  <input type="hidden" id="id_info" name ="chave" value="{{ resultado[0] }}">
+                  <input type="hidden" name ="tabela" value="devedores">
+                  <button class="btn btn-outline-primary" data-id="{{ resultado[0] }}" type="submit">Mais Informações...</button>
+                </form>
+              
+              </td>
+              {% elif tabela == 'debitos'%}
+              <td>
+                <div class="{{ resultado[8] }}"></div>
+              </td>
+              <td>{{ resultado[1] }}</td>
+              <td>{{ resultado[2] }}</td>
+              <td>{{ resultado[3] }}</td>
+              <td>{{ resultado[4] }}</td>
+              <td>{{ resultado[5] }}</td>
+              <td>{{ resultado[6] }}</td>
+              <td>{{ resultado[9] }}</td>
+              <td>{{ resultado[7] }}</td>
+              <td class="opcoes">
+                <form method="post" action="/mais_informacoes">
+                  <input type="hidden" id="id_info" name ="chave" value="{{ resultado[0] }}">
+                  <input type="hidden" name ="tabela" value="debitos">
+                  <button class="btn btn-outline-primary" data-id="{{ resultado[0] }}" type="submit">Mais Informações...</button>
+                </form>
+                
+                </td>
+                {% elif tabela == 'baixas' %}
+                <td>{{ resultado[1] }}</td>
+                <td>{{ resultado[2] }}</td>
+                <td>{{ resultado[3] }}</td>
+                
+              
+                <td class="opcoes">
+                  <div id="info-options">
+                   
+                    <button class="btn btn-primary" onclick="ativar_modal_baixa2('{{resultado[0]}}')"><i class="fas fa-edit"></i> </button>
+                    
+                    
+                    <div id="custom-confirm-baixa" class="confirm-overlay hidden" data-id="{{resultado[0]}}"> 
+                      <div class="confirm-box-baixa">
+                          <div id="modal-superior">
+                            <h3>EFETUAR BAIXA DO DÉBITO</h3>
+                            <button onclick="desativar_modal_baixa2('{{resultado[0]}}')">x</button>
+                          </div>
+                          
+                          <div class="confirm-buttons-baixa" data-id="{{ resultado[0] }}">
+                              <form method="post" action="/alterar_baixa">
+                                  <input  type="text" name ="num_ra" value="{{ resultado[1] }}" >
+                                  <input  type="text" class="valor_baixa" data-id="{{resultados[0]}}" name ="valor" value="{{ resultado[2] }}">
+                                  <input  type="text" name ="data_pag" value="{{ resultado[3] }}">
+                                  <input type="hidden" name ="id" value="{{ resultado[0] }}" >
+                                  <button id="confirm-simples" class="btn-simples" onclick="desativar_modal_baixa2('{{resultado[0]}}')">Alterar Baixa</button>
+                              </form>
+                              
+                          </div>
+                      </div>
+                    </div>
+        
+                    <form id="formDelete" class="formDelete" method="post" action="/deletar_baixa">
+                        <input type="hidden" id="id_del" name ="chave" value="{{ resultado[0] }}">
+                        <button class="btn btn-danger"><i class="fas fa-trash-alt"></i> </button>
+                    </form>
+                    
+                </div>
+                
+                </td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td colspan="5">Nenhum resultado encontrado.</td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        $('#minhaTabela').DataTable({
+          "pageLength": 20,
+          language: {
+            url: "https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json"
+          }
+        });
+      });
+    </script>
+    
+    <script src="{{ url_for('static', filename='js/validacoes_e_post_devedores.js') }}"></script>
+  
+  {% endblock %}

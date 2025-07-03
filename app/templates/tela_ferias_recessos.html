@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/estilo_calendario.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+
+<div id="tela_boas_vindas">
+
+<div id="bloco-principal">
+      <div id="bloco-pessoal">
+          <!-- <img src="{{ url_for('static', filename='images/usuario.png') }}" alt="Usuário">
+          <h6>Bem vindo {{nome_usuario}}</h6> -->
+          <!-- <h3>PÁGINA INICIAL</h3> -->
+      </div>
+
+  </div>
+
+<section id="tela-geral-calendar">
+  <div id="form-calendar">
+    <div id="filtro-calendar">
+      <h5>FILTRAR CALENDÁRIO</h5>
+      <div class="formulario-em-linha">
+        <div class="input-em-coluna">
+          <p>MÊS</p>
+          <input type="text" id="mes_filtro" value="06">
+        </div>
+        <div class="input-em-coluna">
+          <p>ANO</p>
+          <input type="text" id="ano_filtro" value="2025">
+        </div>
+      </div>
+    </div>
+    
+    <div id="formulario-ferias">
+      <h5>SOLICITAR FÉRIAS</h5>
+      
+      <div class="input-em-coluna">
+        <p>DATA DE INICIO</p>
+        <input type="text" id="data_inicio" placeholder="DD/MM/AAAA">
+      </div>
+      <div class="input-em-coluna">
+        <p>DATA FINAL</p>
+        <input type="text" id="data_fim" placeholder="DD/MM/AAAA">
+      </div>
+      
+      <select name="categoria" id="categoria">
+        <option value="ferias">FÉRIAS</option>
+        <option value="banco">BANCO DE HORAS</option>
+        <option value="recesso">RECESSO</option>
+      </select>
+      
+      <div class="botoes-solicitacao">
+        <button id="visualizar" class="btn-visualizar">Visualizar</button>
+        <button id="remover" class="btn-remover">Remover</button>
+      </div>
+
+      <button id="solicitar" class="btn-solicitar">Solicitar</button>
+
+        
+      
+    </div>
+    <div id="legenda-calendar">
+      <h5>LEGENDA</h5>
+      <div class="legenda"><div class="bolinha-laranja"></div><p>EM ANÁLISE</p></div>
+      <div class="legenda"><div class="bolinha-verde"></div><p>APROVADO</p></div>
+      <div class="legenda"><div class="bolinha-vermelha"></div><p>RECUSADO</p></div>
+    </div>
+  </div>
+
+  <div id="tela-calendario">
+    <!-- O calendário está configurado no arquivo calendario-options.js na pasta static\js -->
+    <div id="calendar"></div>
+
+  </div>
+
+</section>
+</div>
+
+<div id="meu-modal">
+  <div id="topo-meu-modal">
+    <h5>Informações do Evento</h5>
+    <button onclick="document.getElementById('meu-modal').style.display='none'">x</button>
+  </div>
+  <p id="modal-id"></p>
+  <p id="modal-titulo"></p>
+  <p id="modal-situacao"></p>
+
+  <div id="botoes-meu-modal">
+    <button class="aprovar" id="aprovar">APROVAR</button>
+    <button class="reprovar" id="recusar">RECUSAR</button>
+    <button class="excluir" id="excluir">EXCLUIR</button>
+  </div>
+  
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<script src="{{ url_for('static', filename='js/configuracoes_do_calendario.js') }}"></script> 
+
+{% endblock %}

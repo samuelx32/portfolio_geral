@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/estilo_usuarios.css') }}">
+
+<div id="tela_boas_vindas">
+
+    <div id="bloco-principal">
+        <div id="bloco-pessoal">
+            <!-- <img src="{{ url_for('static', filename='images/usuario.png') }}" alt="Usuário">
+            <h6>Bem vindo {{nome_usuario}}</h6> -->
+            <!-- <h3>PÁGINA INICIAL</h3> -->
+        </div>
+
+    </div>
+
+    <div id="tela-geral-usuarios">
+        <div id="titulo-usuarios">
+            <h5><strong>{{dados_usuario['nome']}} - {{dados_usuario['ponto']}}</strong></h5>
+            <h6><strong>Ramal:</strong> 6-3461</h6>
+            <h6><strong>Cargo:</strong> {{dados_usuario['cargo']}}</h6>
+            <h6><strong>Nível de prioridade no sistema:</strong> {{dados_usuario['nivel']}}</h6>
+        </div>
+
+        <hr class="linha-user">
+        <h5 class="titulo-tarefas">TAREFAS</h5>       
+        <div id="tarefas">
+            
+            <div id="pendentes">
+                <h6 class="mb-4 mt-4">PENDENTES <i class="fa-solid fa-xmark-circle" style="color: red;"></i></h6>  
+                    
+                {%if tarefas%}
+                {% for tarefa in tarefas %}
+                {% if tarefa[3] == 'NAO'%}
+                
+                
+                <p><strong> {{tarefa[0]}}</strong> PRIORIDADE: {{tarefa[2]}}</p>
+                
+                {%endif%}
+                {% endfor %}
+                {%else%}
+                
+                <p>Não possui tarefas.</p>
+                
+                {%endif%}
+                    
+                
+                   
+            </div>
+                
+            <div id="concluidas">
+                <h6 class="mb-4 mt-4">CONCLUIDAS <i class="fa-solid fa-xmark-circle" style="color: green;"></i></h6>
+                {%if tarefas%}
+                {% for tarefa in tarefas %}
+                {% if tarefa[3] == 'SIM'%}
+                
+                
+                <p><strong> {{tarefa[0]}}</strong> PRIORIDADE: {{tarefa[2]}}</p>
+                
+                {%endif%}
+                {% endfor %}
+                {%else%}
+                
+                <p>Não possui tarefas.</p>
+                
+                {%endif%}
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+
+</div>
+
+ 
+{% endblock %}

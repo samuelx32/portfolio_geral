@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Alterar Empresa</title>
+    <link rel="icon" type="image/png" href="/static/images/aviao.png">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_sicod_grus.css') }}">
+    <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="container-login100" style="background-image: url('{{ url_for('static', filename='images/camara.png') }} ')">
+
+        <div class="wrap-login100">
+            
+            <div id = "topo">
+                <div id="area-de-busca">
+                    <button><a href="{{ url_for('lista_empresas')}}"><i class="fas fa-arrow-left"></i></a></button>
+                    <form method="post" action="/pesquisar_gru">
+                      <input type="text" id="cnpj-busca" name="cnpj" placeholder="CPNJ/CPF">
+                      <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                  </div>
+                <p>
+                  <img src="{{ url_for('static', filename='images/usuario.png') }}" alt="Usuário">
+                  {{ nome_usuario }}
+                </p>
+            </div>
+
+            <div id="meio">
+                <div id="meio-bloco1">
+                    <p>Alterar Empresa: </p>
+                    {% if juridica %}  
+                    <select id="pessoa" name="select">
+                        <option value="cnpj">Pessoa Jurídica</option>
+                        <option value="cpf">Pessoa Física</option>
+                    </select>
+                    {% else %}
+                    <select id="pessoa" name="select">
+                        <option value="cpf">Pessoa Física</option>
+                        <option value="cnpj">Pessoa Jurídica</option>
+                    </select>
+                    {% endif %}
+                </div>
+                
+                <div id="bloco-form">
+                    <form id="formGRUs_alterar" method="post" action="/alterar_empresa" >
+                        {% if resultados %}
+                        {% for resultado in resultados %}
+                        <div class="input-group2">
+                            <label for="nome">Nome: </label>
+                            <input type="text" id="nome" name="nome" placeholder="Nome" value="{{ resultado[1] }}" required>
+                        </div>
+                        <input type="hidden" id="id" value="{{resultado[0]}}">
+                        {% if juridica %}  
+                        <div id="div-cnpj" class="input-group2">
+                            <label for="cnpj">CNPJ: </label>
+                            <input type="text" id="cnpj" name="cnpj" placeholder="00.000.000/0000-00" value="{{ resultado[2] }}" maxlength="18" required>
+                        </div>
+
+                        <div id="div-cpf" class="input-group2 sleep-campo">
+                            <label for="cpf">CPF: </label>
+                            <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" >
+                        </div>
+                        {% else %}
+                        <div id="div-cpf" class="input-group2">
+                            <label for="cpf">CPF: </label>
+                            <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" value="{{ resultado[2] }}" maxlength="14" required>
+                        </div>
+
+                        <div id="div-cnpj" class="input-group2 sleep-campo">
+                            <label for="cnpj">CNPJ: </label>
+                            <input type="text" id="cnpj" name="cnpj" placeholder="00.000.000/0000-00" maxlength="18">
+                        </div>
+                        {% endif %}
+                        
+                        <div class="input-group2">
+                            <label for="endereco">Endereço: </label>
+                            <input type="text" id="endereco" name="endereco" placeholder="Endereço" value="{{ resultado[3] }}" required>
+                        </div>
+
+                        <div class="input-group2">
+                            <label for="valor">Valor: </label>
+                            <input type="text" id="valor" name="valor" placeholder="R$ 0,00" value="{{ resultado[4] }}" required>
+                        </div>
+
+                        <div class="input-group2">
+                            <label for="email">Email: </label>
+                            <input type="text" id="email" name="email" placeholder="Email" value="{{ resultado[5] }}" required>
+                        </div>
+
+                        <div class="input-group2">
+                            <label for="contrato">Contrato: </label>
+                            <input type="text" id="contrato" name="contrato" placeholder="Contrato" value="{{ resultado[6] }}" required>
+                        </div>
+                        
+                        <div class="button-group">
+                            <label for="processo"></label>
+                            <button type="submit">Alterar Empresas</button>
+                        </div>
+
+                        {% endfor %}
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+</body>
+
+
+<script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
+<script src="{{ url_for('static', filename='js/validacoes_e_post_empresas.js') }}"></script>
+
+</html>

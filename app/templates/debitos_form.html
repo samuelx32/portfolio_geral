@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% block content %}  
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_forms.css') }}"> 
+<script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">    
+<link rel="stylesheet" type="text/css"
+    href="{{ url_for('static', filename='css/material-design-iconic-font.min.css') }}">
+
+{% if funcao != 'alterar' %}
+        <div id="meio">
+            <div id="meio-bloco1">
+                <div>
+                    <a href="/lista_debitos"><i class="fa fa-arrow-left"></i></a>
+                    <h4>Adicionar Débito: </h4>
+                </div>
+                
+                <select class="select-pessoa" id="status" name="select">
+                    <option value="cobranca">EM COBRANÇA</option>
+                    <option value="pago">PAGO</option>
+                    <option value="vencido">VENCIDO</option>
+                </select>
+            </div>
+            
+            <div id="bloco-form">
+                <form id="formDebito" method="post" action="/inserir_debito" >
+                   
+
+                    <div>
+                        <label for="num_oficio">Número do Ofício: </label>
+                        <input class="input-medio" type="text" id="num_oficio" name="num_oficio" placeholder="0000" maxlength="4" required>
+                    </div>
+                    <div>
+                        <label for="data_oficio">Data do Ofício: </label>
+                        <input class="input-medio" type="text" id="data_oficio" name="data_oficio" placeholder="00/00/0000" maxlength="10" required>
+                    </div>
+                    <div>
+                        <label for="vencimento">Vencimento: </label>
+                        <input class="input-medio"type="text" id="vencimento" name="vencimento" placeholder="00/00/0000" maxlength="10"required>
+                    </div>
+                    <div>
+                        <label for="valor">Valor: </label>
+                        <input class="input-medio"type="text" id="valor" name="valor" placeholder="R$ 0,00" required>
+                    </div>
+                    <div>
+                        <label for="saldo_atual">Saldo Atual: </label>
+                        <input class="input-medio"type="text" id="saldo_atual" name="saldo_atual" placeholder="R$ 0,00" required>
+                    </div>
+                    <div>
+                        <label for="processo">Processo: </label>
+                        <input class="input-medio"type="text" id="processo" name="processo" placeholder="000000/0000" required>
+                    </div>
+
+                    <div>
+                        <label for="devedor">Selecione Uma empresa: </label>
+                        <select class="input-medio" id="id_devedor" name="select">
+                            {% if resultados %}
+                            {% for resultado in resultados %}
+                                <option value="{{resultado[0]}}">{{resultado[1]}}</option>
+                            {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    
+                    <div class="button-group">
+                        <label for="processo"></label>
+                        <button type="submit" class="button-form">Cadastrar Débito</button>
+                    </div>
+                </form>
+            </div>
+        
+    </div>
+    {% else %}
+    <div id="meio">
+        <div id="meio-bloco1">
+            <div>
+                <form method="post" action="/mais_informacoes">
+                    <input type="hidden" id="id_info" name ="chave" value="{{ resultados['id'] }}">
+                    <input type="hidden" name ="tabela" value="debitos">
+                    <button type="submit"><i class="fa fa-arrow-left"></i></button>
+                </form>
+                <h4>Alterar Débito: </h4>
+            </div>
+            
+            <select class="select-pessoa" id="status" name="select">
+                <option value="{{resultados['status']}}">{{resultados['status']}}</option>
+                <option value="cobranca">EM COBRANÇA</option>
+                <option value="pago">PAGO</option>
+                <option value="vencido">VENCIDO</option>
+            </select>
+        </div>
+        
+        <div id="bloco-form">
+            <form id="formAlterarDebito" method="post" action="/alterar_debito" >
+               
+
+                <div>
+                    <label for="num_oficio">Número do Ofício: </label>
+                    <input class="input-medio" type="text" id="num_oficio" name="num_oficio" value="{{resultados['num_oficio']}}" maxlength="10" required>
+                </div>
+                <div>
+                    <label for="data_oficio">Data do Ofício: </label>
+                    <input class="input-medio" type="text" id="data_oficio" name="data_oficio" value="{{resultados['data_oficio']}}" maxlength="10" required>
+                </div>
+                <div>
+                    <label for="vencimento">Vencimento: </label>
+                    <input class="input-medio"type="text" id="vencimento" name="vencimento" value="{{resultados['vencimento']}}" maxlength="10"required>
+                </div>
+                <div>
+                    <label for="valor">Valor: </label>
+                    <input class="input-medio"type="text" id="valor" name="valor" value="{{resultados['valor']}}" required>
+                </div>
+                <div>
+                    <label for="saldo_atual">Saldo Atual: </label>
+                    <input class="input-medio"type="text" id="saldo_atual" name="saldo_atual" value="{{resultados['saldo_atual']}}" required>
+                </div>
+                <div>
+                    <label for="processo">Processo: </label>
+                    <input class="input-medio"type="text" id="processo" name="processo" value="{{resultados['processo']}}" required>
+                </div>
+
+                <input type="hidden" id="id_alt" name="id" value="{{ resultados['id'] }}" required>
+                
+                <div>
+                    <label for="devedor">Selecione Uma empresa: </label>
+                    <select class="input-medio" id="id_devedor" name="select">
+                        {% if devedores %}
+                        {% for devedor in devedores %}
+                            {% if devedor[0] == resultados['id_devedor'] %}
+                                <option value="{{devedor[0]}}" selected>{{devedor[1]}}</option>
+                            {% endif %}
+                            <option value="{{devedor[0]}}">{{devedor[1]}}</option>
+                        {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+                
+                <div class="button-group">
+                    <label for="processo"></label>
+                    <button type="submit" class="button-form">Alterar Débito</button>
+                </div>
+            </form>
+        </div>
+    
+    </div>
+    {% endif %}
+
+    
+
+<script src="{{ url_for('static', filename='js/validacoes_e_post_debitos.js') }}"></script>
+{% endblock %} 
+
+
+

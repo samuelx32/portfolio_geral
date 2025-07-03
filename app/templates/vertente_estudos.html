@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/estilo_conab.css') }}">
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<div id="tela_boas_vindas">
+    <div id="menu_conab">
+        <nav>
+            <h4>{{materia}} - {{submateria}}</h4>
+            <a href="/vertente_formulario_conteudo?materia={{materia}}&vertente={{vertente}}&submateria={{submateria}}">ADICIONAR ESTUDO</a>
+        </nav>
+        <hr class="linha-h"/>
+        {% for estudo in estudos %}
+            <div class="bloco_estudo">
+                <nav>
+                    <p>{{estudo[1]}}</p>
+
+                    <form method="post" action="">
+                        <input type="hidden" name="id_conteudo" value="">
+                        <button type="submit">MODIFICAR</button>
+                    </form>
+                </nav>
+
+                <p>{{estudo[2]}}</p>
+            </div>
+            
+        {% endfor %}
+        
+    </div>
+    
+</div>
+
+
+
+<script src="{{ url_for('static', filename='js/validacoes_e_post_devedores.js') }}"></script>
+
+
+
+{% endblock %}

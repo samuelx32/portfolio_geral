@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if tabela == "devedores" %}
+<div id="card-geral">
+    <div id="card-topo">
+        <div id="info-options">
+            <a class="voltar-btn" href="/lista_devedores"><i class="fa fa-arrow-left"></i></a>
+            <h4>Informações do Devedor</h4>
+        </div>
+
+        <div id="info-options">
+            <form method="post" action="/alterar_devedores_form">
+                <input type="hidden" name="chave" value="{{ resultados['id'] }}">
+                <input type="hidden" name="auxiliar" value="{{ resultados['cnpj'] }}">
+                <button class="btn btn-edit"><i class="fas fa-edit"></i> </button>
+            </form>
+
+            <form id="formDelete" method="post" action="/deletar_devedor">
+                <input type="hidden" id="id_del" name ="chave" value="{{ resultados['id'] }}">
+                <button class="btn btn-delete"><i class="fas fa-trash-alt"></i> </button>
+            </form>
+            
+        </div>
+    </div>
+    <div id="card-info">
+        <div id="card-ra">
+            <h5><strong>NOME:</strong> {{ resultados['nome'] }}</h5>
+            <h5><strong>CNPJ/CPF:</strong> {{ resultados['cnpj'] }}</h5>
+            <h5><strong>ENDEREÇO:</strong> {{ resultados['endereco'] }}</h5>
+            <h5><strong>EMAIL:</strong> {{ resultados['email'] }}</h5>
+            <h5><strong>CONTRATO:</strong> {{ resultados['contrato'] }}</h5>
+            <h5><strong>CONTATO:</strong>{{ resultados['contatos'] }}</h5>
+            <h5><strong>PRONOME:</strong>{{ resultados['pronome'] }}</h5>
+            <h5><strong>TRATAMENTO:</strong>{{ resultados['tratamento'] }}</h5>
+        </div>
+        {% if resultados2 %}
+        {% for resultado2 in resultados2 %}
+        <div id="card-ra">
+            <h6 class="titulo-ra"><strong>DÉBITO DO DEVEDOR</strong></h6>
+            <h6><strong>Número do Oficio:</strong>{{ resultado2[0] }}</h6>
+            <h6><strong>Valor:</strong>{{ resultado2[2] }}</h6>
+            <h6><strong>Saldo Atual:</strong>{{ resultado2[3] }}</h6>
+            <h6><strong>Data do oficio:</strong>{{ resultado2[1] }}</h6>
+        </div>
+        {% endfor %}
+        {%endif%}
+    </div>
+</div>
+{% else %}
+<div id="card-geral">
+    <div id="card-topo">
+        <div id="info-options">
+            <a class="voltar-btn" href="/lista_debitos"><i class="fa fa-arrow-left"></i></a>
+            <h4>Informações do Débito</h4>
+        </div>
+        
+
+        <div id="info-options">
+            <form method="post" action="/alterar_debitos_form">
+                <input type="hidden" name="chave" value="{{ resultados['id'] }}">
+                <button class="btn btn-edit"><i class="fas fa-edit"></i> </button>
+            </form>
+
+            <form id="formDelete" class="formDelete" method="post" action="/deletar_debito">
+                <input type="hidden" id="id_del" name ="chave" value="{{ resultados['id'] }}">
+                <button class="btn btn-delete"><i class="fas fa-trash-alt"></i> </button>
+            </form>
+            {% if resultados['status'] != 'pago' %}
+    
+            <button class="btn btn-edit ml-2"  onclick="ativar_modal_baixa()">BAIXAR DÉBITO</button>
+            
+            {% else %}
+            <button class="btn btn-edit desabilitado" type="submit">BAIXAR DÉBITO</button>
+            {% endif %}
+
+            <form class="formModal" method="post" action="/">
+                <input type="hidden" id="nome_mod" name ="nome_mod" value="{{ resultados['nome'] }}" data-id="{{ resultados['id'] }}">
+                <input type="hidden" id="cnpj_mod" name ="cnpj_mod" value="{{ resultados['cnpj'] }}" data-id="{{ resultados['id'] }}">
+                <input type="hidden" id="valor_mod" name ="valor_mod" value="{{ resultados['valor'] }}" data-id="{{ resultados['id'] }}">
+                <button class="btn btn-edit" data-id="{{ resultados[0][0] }}" type="submit">GRU</button>
+            </form> 
+            
+            
+        </div>
+    </div>
+    <div id="card-info">
+        <div id="card-ra">
+            <h5><strong>NOME DO DEVEDOR:</strong>  {{ resultados['nome'] }}</h5>
+            <h5><strong>CNPJ/CPF:</strong> {{ resultados['cnpj'] }}</h5>
+            <h5><strong>NÚMERO DO OFÍCIO:</strong> {{ resultados['num_oficio'] }}</h5>
+            <h5><strong>DATA DO OFÍCIO:</strong> {{ resultados['data_oficio'] }}</h5>
+            <h5><strong>VENCIMENTO:</strong> {{ resultados['vencimento'] }}</h5>
+            <h5><strong>VALOR:</strong>R$ {{ resultados['valor'] }}</h5>
+            <h5><strong>SALDO ATUAL:</strong>R$ {{ resultados['saldo_atual'] }}</h5>
+            <h5><strong>PROCESSO:</strong>{{ resultados['processo'] }}</h5>
+            <h5><strong>STATUS:</strong>{{ resultados['status'] }}</h5>
+        </div>
+        {% if resultados['status'] == 'pago' or resultados['status'] == 'parcial' %}
+        {% for resultado2 in resultados2 %}
+        <div id="card-ra">
+            <h6 class="titulo-ra"><strong>DADOS DA BAIXA DO DÉBITO</strong></h6>
+            <h6><strong>Número da RA:</strong>{{ resultado2[0] }}</h6>
+            <h6><strong>Valor:</strong>{{ resultado2[1] }}</h6>
+            <h6><strong>Data de pagamento:</strong>{{ resultado2[2] }}</h6>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+
+{% endif %}
+
+<div id="custom-confirm" class="confirm-overlay hidden"> <!-- Esse modal fica invisivel por causa da classe 'hidden', assim que o botão GRU acima é clicado ele se torna visível graças ao javascript acionando na útlima deste código -->
+    <div class="confirm-box">
+        <div id="modal-superior">
+          <h3>ESCOLHA UMA OPÇÃO</h3>
+          <button onclick="desativar_modal()">x</button>
+        </div>
+        
+        <div class="confirm-buttons">
+            <form method="post" action="/gerar_gru">
+              <input id="nome_mod_simples" type="hidden" name ="nome" value="">
+              <input id="cnpj_mod_simples" type="hidden" name ="cnpj" value="">
+              <input id="valor_mod_simples" type="hidden" name ="valor" value="">
+              <input type="hidden" name ="tipo_gru" value="simples">
+              <button id="confirm-simples" class="btn-simples" onclick="desativar_modal()">GRU Simples</button>
+            </form>
+            
+            <!-- <form method="post" action="/gerar_gru">
+              <input id="nome_mod_pix" type="hidden" name ="nome" value="">
+              <input id="cnpj_mod_pix" type="hidden" name ="cnpj" value="">
+              <input id="valor_mod_pix" type="hidden" name ="valor" value="">
+              <input type="hidden" name ="tipo_gru" value="pix">
+              <button id="confirm-pix" class="btn-pix" onclick="desativar_modal()">GRU PIX</button>
+            </form> -->
+            
+        </div>
+    </div>
+  </div>
+
+  <div id="custom-confirm-baixa" class="confirm-overlay hidden"> 
+    <div class="confirm-box-baixa">
+        <div id="modal-superior">
+          <h3>EFETUAR BAIXA DO DÉBITO</h3>
+          <button onclick="desativar_modal_baixa()">x</button>
+        </div>
+        
+        <div class="confirm-buttons-baixa">
+            <form method="post" action="/adicionar_baixa">
+                <input  type="text" name ="num_ra" placeholder="Número da RA: ">
+                <input  type="text" id="valor" name ="valor" placeholder="VALOR: ">
+                <input  type="text" id="data_oficio" name ="data_pag" placeholder="Data de pagamento: ">
+                <input type="hidden" name ="id_debito" value="{{ resultados['id'] }}">
+                <button id="confirm-simples" class="btn-simples" onclick="desativar_modal_baixa()">Efetuar Baixa</button>
+            </form>
+            
+        </div>
+    </div>
+  </div>
+
+<script src="{{ url_for('static', filename='js/validacoes_e_post_devedores.js') }}"></script>
+{% endblock %}
