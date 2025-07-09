@@ -97,216 +97,6 @@ def retornar_noticias_camaranet():
         return None
     
 
-# OPERAÇÕES RELACIONADAS A TABELA DE DEVEDORES
-
-def retornar_todos_devedores():
-    conn = get_db_connection("sicod_gru")
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM Devedores ORDER BY id DESC")
-    resultados = cursor.fetchall()
-
-    if resultados:
-        return resultados
-    else: 
-        return None
-    
-def retornar_devedores_filtrados(cnpj):
-    id = cnpj
-    if len(id) == 10:
-        id = f'0{id}'
-    if len(id) == 11:
-        id = f"{id[0]}{id[1]}{id[2]}.{id[3]}{id[4]}{id[5]}.{id[6]}{id[7]}{id[8]}-{id[9]}{id[10]}"
-    elif len(id) == 14 and id[3] != '.':
-        id = f"{id[0]}{id[1]}.{id[2]}{id[3]}{id[4]}.{id[5]}{id[6]}{id[7]}/{id[8]}{id[9]}{id[10]}{id[11]}-{id[12]}{id[13]}"
-    
-    conn = get_db_connection("sicod_gru")
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM Devedores WHERE cnpj = ? ORDER BY id DESC",(id,))
-    resultados = cursor.fetchall()
-
-    if resultados:
-        return resultados
-    else: 
-        return None
-    
-def retornar_um_devedor(id):
-    conn = get_db_connection("sicod_gru")
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM Devedores WHERE id = ?",(id,))
-    resultado = cursor.fetchone()
-
-    if resultado:
-        return resultado
-    else: 
-        return None
-
-    
-def inserir_devedor(nome, cnpj, endereco,email,contrato,contato,pronome,tratamento):
-    try:
-        conn = get_db_connection("sicod_gru")
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO Devedores (nome, cnpj, endereco,email,contrato,contatos,pronome,tratamento) values (?,?,?,?,?,?,?,?)",(nome, cnpj, endereco,email,contrato,contato,pronome,tratamento))
-        conn.commit()
-        conn.close()
-        
-        mensagem = "Devedor Adicionado com Sucesso"
-        tipo = "success"
-    except Exception as e:
-        mensagem = f"Ocorreu um erro: {e}"
-        tipo = "error"
-
-    return mensagem,tipo
-
-def alterar_devedor(nome, cnpj, endereco,email,contrato,contato,pronome,tratamento,id):
-    try:
-        conn = get_db_connection("sicod_gru")
-        cursor = conn.cursor()
-        cursor.execute("UPDATE Devedores SET nome=?,cnpj=?,endereco=?,email=?,contrato=?,contatos=?,pronome=?,tratamento=? WHERE id = ?",(nome, cnpj, endereco,email,contrato,contato,pronome,tratamento,id))
-        conn.commit()
-        conn.close()
-
-        mensagem = "Devedor Alterado com Sucesso"
-        tipo = "success"
-    except Exception as e:
-        mensagem = f"Ocorreu um erro: {e}"
-        tipo = "error"
-
-    return mensagem,tipo
-
-def deletar_devedor(id):
-    try:
-        conn = get_db_connection("sicod_gru")
-        cursor = conn.cursor()
-        cursor.execute("PRAGMA foreign_keys = ON;")
-        cursor.execute("DELETE FROM Devedores WHERE id = ?",(id,))
-        conn.commit()
-        conn.close()
-
-        mensagem = "Devedor Deletado com Sucesso"
-        tipo = "success"
-    except Exception as e:
-        erro = str(e)
-        if "FOREIGN KEY constraint failed" in erro:
-            mensagem = f"Esse devedor possui débitos vinculados!!"
-        else:
-            mensagem = f"Ocorreu um erro: {e}"
-        tipo = "error"
-
-    return mensagem, tipo
-
-
-# OPERAÇÕES RELACIONADAS A TABELA DE DÉBITOS
-    
-def retornar_debitos(cnpj,status):
-  
-    conn = get_db_connection("sicod_gru")
-    cursor = conn.cursor()
-    parametros = []
-    query = "SELECT d.id,v.nome,v.cnpj,d.num_oficio,d.data_oficio,d.vencimento,d.valor,d.processo,d.status,d.saldo_atual FROM Devedores as v JOIN Debitos as d ON d.id_devedor = v.id WHERE 1=1"
-        
-    if status:
-        query += " AND status = ?"
-        parametros.append(status)
-        
-    if cnpj:
-        id = cnpj
-        if len(id) == 10:
-            id = f'0{id}'
-        if len(id) == 11:
-            id = f"{id[0]}{id[1]}{id[2]}.{id[3]}{id[4]}{id[5]}.{id[6]}{id[7]}{id[8]}-{id[9]}{id[10]}"
-        elif len(id) == 14 and id[3] != '.':
-            id = f"{id[0]}{id[1]}.{id[2]}{id[3]}{id[4]}.{id[5]}{id[6]}{id[7]}/{id[8]}{id[9]}{id[10]}{id[11]}-{id[12]}{id[13]}"
-
-        query += " AND cnpj = ?"
-        parametros.append(id)
-        
-    query += " ORDER BY d.id DESC"
-    cursor.execute(query,parametros)
-    resultados = cursor.fetchall()
-
-    if resultados:
-        return resultados
-    else: 
-        return None
-
-def retornar_um_debito(id):
-    conn = get_db_connection("sicod_gru")
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM Debitos WHERE id = ?",(id,))
-    resultado = cursor.fetchone()
-
-    if resultado:
-        return resultado
-    else: 
-        return None
-
-def retornar_debitos_filtrados(id):
-    conn = get_db_connection("sicod_gru")
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT num_oficio,data_oficio,valor,saldo_atual FROM Debitos WHERE id_devedor=?",(id,))
-    resultado = cursor.fetchall()
-
-    if resultado:
-        return resultado
-    else: 
-        return None
-    
-def retornar_debitos_devedores_join(id):
-    conn = get_db_connection("sicod_gru")
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT d.id,v.nome,v.cnpj,d.num_oficio,d.data_oficio,d.vencimento,d.valor,d.processo,d.status,d.saldo_atual FROM Devedores as v JOIN Debitos as d ON d.id_devedor = v.id WHERE d.id=?",(id,))
-    resultado = cursor.fetchone()
-
-    if resultado:
-        return resultado
-    else: 
-        return None
-    _
-
-def inserir_debito(num_oficio, data_oficio, vencimento, valor, processo, id_devedor,status,saldo_atual):
-    try:
-        conn = get_db_connection("sicod_gru")
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO Debitos (num_oficio, data_oficio, vencimento, valor, processo, id_devedor,status,saldo_atual) values (?,?,?,?,?,?,?,?)",(num_oficio, data_oficio, vencimento, valor, processo, id_devedor,status,saldo_atual))
-        conn.commit()
-        conn.close()
-
-        mensagem = "Débito Adicionado com Sucesso"
-        tipo = "success"
-    except Exception as e:
-        mensagem = f"Ocorreu um erro: {e}"
-        tipo = "error"
-
-    return mensagem,tipo
-
-
-def deletar_debito(id):
-    try:
-        conn = get_db_connection("sicod_gru")
-        cursor = conn.cursor()
-        cursor.execute("PRAGMA foreign_keys = ON;")
-        cursor.execute("DELETE FROM Debitos WHERE id = ?",(id,))
-        conn.commit()
-        conn.close()
-
-        mensagem = "Debito Deletado com Sucesso"
-        tipo = "success"
-    except Exception as e:
-        erro = str(e)
-        if "FOREIGN KEY constraint failed" in erro:
-            mensagem = f"Esse devedor possui baixas vinculadas!!"
-        else:
-            mensagem = f"Ocorreu um erro: {e}"
-        tipo = "error"
-
-    return mensagem, tipo
-
 def alterar_debito(num_oficio, data_oficio, vencimento,processo,valor,id_devedor,status,saldo_atual,id):
     try:
         conn = get_db_connection("sicod_gru")
@@ -553,6 +343,21 @@ def adicionar_conteudo(materia,vertente,titulo,submateria,texto):
 
     return mensagem,tipo
 
+def alterar_conteudo(id,materia,vertente,titulo,submateria,texto):
+    try:
+        conn = get_db_connection("banco_estudos")
+        c = conn.cursor()
+        c.execute("UPDATE conteudos SET vertente=?,materia=?,titulo=?,submateria=?,texto=? WHERE id = ?",(vertente,materia,titulo,submateria,texto,id))
+        conn.commit()
+        conn.close()
+
+        mensagem = "Conteúdo Alterado"
+        tipo = "success"
+    except Exception as e:
+        mensagem = f"Ocorreu um erro: {e}"
+        tipo = "error"
+
+    return mensagem,tipo
 
 def retornar_materias(vertente):
     try:
@@ -584,6 +389,18 @@ def retornar_conteudos(vertente,materia):
 
     return resultados
 
+def retornar_um_conteudo(id):
+    try:
+        conn = get_db_connection("banco_estudos")
+        c = conn.cursor()
+        c.execute("SELECT id,vertente,materia,titulo,submateria,texto FROM conteudos WHERE id=?",(id,))
+        resultado = c.fetchone()
+        conn.commit()
+        conn.close()    
+    except Exception as e:
+        resultado = None
+
+    return resultado
 
 def retornar_estudos(vertente,materia,submateria):
     try:

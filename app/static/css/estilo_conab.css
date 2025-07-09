@@ -99,6 +99,10 @@
     background-color: rgba(61, 60, 60, 0.932);;
 }
 
+#formulario_conab form textarea{
+    padding:1vh;
+}
+
 
 .bloco_estudo{
     border:1px solid gray;
